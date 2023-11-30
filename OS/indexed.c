@@ -33,7 +33,7 @@ int main()
     while (state == 0)
     {
         int ch;
-        printf("1.Get the blocks 2. exit");
+        printf("\n1.Get the blocks 2. exit");
         scanf("%d", &ch);
         switch (ch)
         {

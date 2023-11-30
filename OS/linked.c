@@ -8,16 +8,16 @@ int main()
     {
         f[i] = 0;
     }
-    printf("Enter the number of blocks which are already allocated: \n");
-    scanf("%d", &n);
-    printf("Enter the blocks which are aready allocated: \n");
-    for (int i = 0; i < n; i++)
-    {
-        scanf("%d", &val);
-        f[val] = 1;
-    }
+    // printf("Enter the number of blocks which are already allocated: \n");
+    // scanf("%d", &n);
+    // printf("Enter the blocks which are aready allocated: \n");
+    // for (int i = 0; i < n; i++)
+    // {
+    //     scanf("%d", &val);
+    //     f[val] = 1;
+    // }
 a:
-    printf("1. add file 2. exit: \n");
+    printf("\n1. add file 2. exit: \n");
     scanf("%d", &ch);
     switch (ch)
     {
@@ -35,12 +35,12 @@ a:
             if (f[i] == 0)
             {
                 f[i] = 1;
-                printf("bno: %d\t---->%d\n", i, f[i]);
+                printf("%d---->", i);
             }
-            else
-            {
-                b++;
-            }
+            // else
+            // {
+            //     b++;
+            // }
         }
         goto a;
         break;

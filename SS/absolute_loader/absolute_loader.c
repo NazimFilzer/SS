@@ -15,6 +15,7 @@ void main()
     for (i = 2, j = 0; i < 8, j < 6; i++, j++)
         name1[j] = line[i];
     name1[j] = '\0';
+
     printf("Name from Input File : %s\n", name1);
     if (strcmp(name, name1) == 0)
     {
@@ -26,16 +27,15 @@ void main()
                 for (i = 2, j = 0; i < 8, j < 6; i++, j++)
                     staddr[j] = line[i];
                 staddr[j] = '\0';
+
                 staddr1 = atoi(staddr);
                 i = 12;
                 while (line[i] != '$')
                 {
                     if (line[i] != '^')
                     {
-                        printf("00%d \t %c%c\n",
-                               staddr1, line[i], line[i + 1]);
-                        fprintf(fp1, "00%d \t %c%c\n",
-                                staddr1, line[i], line[i + 1]);
+                        printf("00%d \t %c%c\n",staddr1, line[i], line[i + 1]);
+                        fprintf(fp1, "00%d \t %c%c\n",staddr1, line[i], line[i + 1]);
                         staddr1++;
                         i = i + 2;
                     }

@@ -53,13 +53,13 @@ int main()
     temp = 0;
     for (i = 0; i < n; i++)
         temp += p[i].wt;
-    printf("\ntotal waiting time\t\t:%d\n", temp);
+    // printf("\ntotal waiting time\t\t:%d\n", temp);
     printf("average waiting time\t\t:%f\n", (float)temp / n);
 
     // Avg tat
     temp = 0;
     for (i = 0; i < n; i++)
         temp += p[i].tat;
-    printf("total turn around time\t\t:%d\n", temp);
+    // printf("total turn around time\t\t:%d\n", temp);
     printf("average turn around time\t:%f\n", (float)temp / n);
 }
