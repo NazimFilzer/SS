@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include <string.h>
 #define max 100
+// https://www.youtube.com/watch?v=ZlHf3zMA75A&list=PLpqGPi6G3Jf1dIN2aPJHQ8P8JbQe0yoBd&index=3
 void swap(char *x, char *y)
 {
     char t = *x;
