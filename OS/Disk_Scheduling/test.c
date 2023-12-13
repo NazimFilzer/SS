@@ -44,7 +44,7 @@ void main()
             current = a[i];
             seek_sequence[index++] = current;
         }
-        dist = head + abs(MAX - 1 - a[right]) + MAX - 1;
+        dist = head + MAX - 1 - a[right] + MAX - 1;
     }
     else
     {
@@ -58,7 +58,7 @@ void main()
             current = a[i];
             seek_sequence[index++] = current;
         }
-        dist = abs(MAX - 1 - head) + a[left] + MAX - 1;
+        dist = (MAX - 1 - head) + a[left] + MAX - 1;
     }
     for (i = 0; i < index; i++)
         printf("%d -> ", seek_sequence[i]);

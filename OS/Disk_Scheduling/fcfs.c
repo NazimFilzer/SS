@@ -39,9 +39,26 @@ void FCFS(int arr[], int head)
 // Driver code
 int main()
 {
-    // request array
-    int arr[8] = {176, 79, 34, 60, 92, 11, 41, 114};
-    int head = 50;
+    int size, head;
+
+    printf("Enter the number of requests: ");
+    scanf("%d", &size);
+
+    int arr[100];
+
+    printf("Enter the requests: ");
+    for (int i = 0; i < size; i++)
+    {
+        scanf("%d", &arr[i]);
+    }
+
+    printf("Enter the initial head position: ");
+    scanf("%d", &head);
+
+    
+    // int arr[8] = {176, 79, 34, 60, 92, 11, 41, 114};
+    // // 176 79 34 60 92 11 41 114
+    // int head = 50;
 
     FCFS(arr, head);
 

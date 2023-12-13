@@ -24,6 +24,7 @@ void SCAN(int arr[], int head, int size, int direction)
             }
         }
     }
+
     for (int i = 0; i < size; i++)
     {
         if (arr[i] > head)
@@ -33,6 +34,7 @@ void SCAN(int arr[], int head, int size, int direction)
             break;
         }
     }
+
     int total_distance = 0;
     int seek_count = 0;
     int index = 0;
@@ -52,7 +54,7 @@ void SCAN(int arr[], int head, int size, int direction)
             cur_track = arr[i];
             seek_sequence[index++] = cur_track;
         }
-        total_distance = head + arr[size - 1];
+        total_distance = head + arr[size - 1]; // while moving left, head will reach 0 and then move to the rightmost element (will not go to 199)
     }
     else
     {
@@ -68,7 +70,7 @@ void SCAN(int arr[], int head, int size, int direction)
             cur_track = arr[i];
             seek_sequence[index++] = cur_track;
         }
-        total_distance = MAX - 1 - head + (MAX - 1 - arr[0]);
+        total_distance = MAX - 1 - head + (MAX - 1 - arr[0]); //(Max- 1 is 199)
     }
 
     printf("Seek Sequence: ");
@@ -108,3 +110,5 @@ int main()
 
     return 0;
 }
+
+// 93 176 42 148 27 14 180
