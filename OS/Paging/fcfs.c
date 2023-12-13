@@ -1,55 +1,43 @@
 #include <stdio.h>
-
 void main()
 {
-    int i, j, k, frameCount, pageFaults = 0, len;
-
-    printf("\nEnter the length of the reference string: ");
+    int i, j, k, f, pf = 0, count = 0, rs[25], frames[10], len;
+    printf("\n Enter the length of reference string -- ");
     scanf("%d", &len);
-
-    int referenceString[25];
-
-    printf("\nEnter the reference string: ");
+    printf("\n Enter the reference string -- ");
     for (i = 0; i < len; i++)
-        scanf("%d", &referenceString[i]);
+        scanf("%d", &rs[i]);
+    printf("\n Enter no. of frames -- ");
+    scanf("%d", &f);
 
-    printf("\nEnter the number of frames: ");
-    scanf("%d", &frameCount);
-
-    int frames[10];
-
-    for (i = 0; i < frameCount; i++)
+    for (i = 0; i < f; i++)
         frames[i] = -1;
 
-    printf("\nThe Page Replacement Process is -- \n");
-
+    printf("\n The Page Replacement Process is -- \n");
     for (i = 0; i < len; i++)
     {
-        for (k = 0; k < frameCount; k++)
+        for (k = 0; k < f; k++)
         {
-            if (frames[k] == referenceString[i])
+            if (frames[k] == rs[i]) // checking for hit
             {
                 printf("\t\t");
-                for (j = 0; j < frameCount; j++)
+                for (j = 0; j < f; j++)
                     printf("\t%d", frames[j]);
                 break;
             }
         }
-
-        if (k == frameCount)
+        if (k == f) // page fault
         {
-            frames[pageFaults++] = referenceString[i];
-            printf("\tPage Fault No. %d", pageFaults);
+            frames[count++] = rs[i];
+            pf++;
+            printf("\tPF No. %d", pf);
 
-            for (j = 0; j < frameCount; j++)
+            for (j = 0; j < f; j++)
                 printf("\t%d", frames[j]);
         }
-
         printf("\n");
-
-        if (pageFaults == frameCount)
-            pageFaults = 0;
+        if (count == f)
+            count = 0;
     }
-
-    printf("\nThe number of Page Faults using FIFO is %d", pageFaults);
+    printf("\n The number of Page Faults using FIFO are %d", pf);
 }
