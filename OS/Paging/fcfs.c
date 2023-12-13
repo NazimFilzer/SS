@@ -9,7 +9,7 @@ void main()
         scanf("%d", &rs[i]);
     printf("\n Enter no. of frames -- ");
     scanf("%d", &f);
-
+    //  // 7 0 1 2 0 3 0 4 2 3 0 3 2 1 2 pf = 15
     for (i = 0; i < f; i++)
         frames[i] = -1;
 
