@@ -1,3 +1,25 @@
+/////////////////Mine///////////////
+MOV AL,00H
+MOV SI, 500H
+MOV [SI],AL
+INC SI
+MOV AL,01H
+MOV [SI],AL
+MOV CX,[600H]
+SUB CX,2
+
+LI:
+MOV AL,[SI-1]
+ADD AL,[SI]
+INC SI
+MOV [SI],AL
+LOOP LI
+HLT
+
+
+
+///////////////////////////
+
 2000	MOV AL, 00H	
 2002	MOV SI, 500H	
 2005	MOV [SI], AL	
