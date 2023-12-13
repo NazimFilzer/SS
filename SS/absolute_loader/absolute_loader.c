@@ -34,8 +34,8 @@ void main()
                 {
                     if (line[i] != '^')
                     {
-                        printf("00%d \t %c%c\n",staddr1, line[i], line[i + 1]);
-                        fprintf(fp1, "00%d \t %c%c\n",staddr1, line[i], line[i + 1]);
+                        printf("00%d \t %c%c\n", staddr1, line[i], line[i + 1]);
+                        fprintf(fp1, "00%d \t %c%c\n", staddr1, line[i], line[i + 1]);
                         staddr1++;
                         i = i + 2;
                     }
@@ -49,5 +49,9 @@ void main()
                 exit(0);
             }
         } while (!feof(fp));
+    }
+    else
+    {
+        printf("Wrong file\n");
     }
 }
