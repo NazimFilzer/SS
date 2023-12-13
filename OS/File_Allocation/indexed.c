@@ -1,8 +1,27 @@
 #include <stdio.h>
 
-void main()
+void displayFileInformation(int numFiles, int startingBlock[], int blockCount[])
+{
+    printf("\nFile\tIndex (Starting Block)\tLength\n");
+    for (int i = 0; i < numFiles; i++)
+        printf("%d\t%d\t\t\t\t%d\n", i + 1, startingBlock[i], blockCount[i]);
+}
+
+void displayFileDetails(int numFiles, int startingBlock[], int blockCount[], int blocksOccupied[][20], int fileName)
+{
+    int index = fileName - 1;
+    printf("File name is: %d\n", fileName);
+    printf("Index is: %d\n", startingBlock[index]);
+    printf("Blocks occupied are: ");
+    for (int j = 0; j < blockCount[index]; j++)
+        printf("%3d", blocksOccupied[index][j]);
+    printf("\n");
+}
+
+int main()
 {
     int numFiles, fileSize[20], startingBlock[20], blockCount[20], blocksOccupied[20][20], fileName;
+    int choice;
 
     // Input file information
     printf("Enter the number of files: ");
@@ -21,20 +40,33 @@ void main()
             scanf("%d", &blocksOccupied[i][j]);
     }
 
-    // Display file information
-    printf("\nFile\tIndex (Starting Block)\tLength\n");
-    for (int i = 0; i < numFiles; i++)
-        printf("%d\t%d\t\t\t\t%d\n", i + 1, startingBlock[i], blockCount[i]);
+    do
+    {
+        // Display menu
+        printf("\nMenu:\n");
+        printf("1. Display file information\n");
+        printf("2. Display file details\n");
+        printf("3. Exit\n");
+        printf("Enter your choice: ");
+        scanf("%d", &choice);
 
-    // Get file name and display details
-    printf("\nEnter the file name: ");
-    scanf("%d", &fileName);
-    printf("File name is: %d\n", fileName);
+        switch (choice)
+        {
+        case 1:
+            displayFileInformation(numFiles, startingBlock, blockCount);
+            break;
+        case 2:
+            printf("Enter the file name: ");
+            scanf("%d", &fileName);
+            displayFileDetails(numFiles, startingBlock, blockCount, blocksOccupied, fileName);
+            break;
+        case 3:
+            printf("Exiting program...\n");
+            break;
+        default:
+            printf("Invalid choice. Please try again.\n");
+        }
+    } while (choice != 3);
 
-    int index = fileName - 1;
-    printf("Index is: %d\n", startingBlock[index]);
-
-    printf("Blocks occupied are: ");
-    for (int j = 0; j < blockCount[index]; j++)
-        printf("%3d", blocksOccupied[index][j]);
+    return 0;
 }

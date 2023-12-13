@@ -1,7 +1,4 @@
-/*
-!important
-Must Compile and Execute 'pass1.c' before executing this
-*/
+
 
 #include <stdio.h>
 #include <stdlib.h>

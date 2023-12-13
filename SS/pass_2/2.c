@@ -1,7 +1,4 @@
-/*
-!important
-Must Compile and Execute 'pass1.c' before executing this
-*/
+
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -9,76 +6,64 @@ Must Compile and Execute 'pass1.c' before executing this
 
 void display();
 
-// itoa manual implementation as its not ANSI Standard
-// start of itoa block
-// Function to swap two numbers
-// void swap(char *x, char *y)
-// {
-//     char t = *x;
-//     *x = *y;
-//     *y = t;
-// }
+void swap(char *x, char *y)
+{
+    char t = *x;
+    *x = *y;
+    *y = t;
+}
 
-// // Function to reverse `buffer[i…j]`
-// char *reverse(char *buffer, int i, int j)
-// {
-//     while (i < j)
-//     {
-//         swap(&buffer[i++], &buffer[j--]);
-//     }
+char *reverse(char *buffer, int i, int j)
+{
+    while (i < j)
+    {
+        swap(&buffer[i++], &buffer[j--]);
+    }
 
-//     return buffer;
-// }
+    return buffer;
+}
 
-// // Iterative function to implement `itoa()` function in C
-// char *itoa(int value, char *buffer, int base)
-// {
-//     // invalid input
-//     if (base < 2 || base > 32)
-//     {
-//         return buffer;
-//     }
+char *itoa(int value, char *buffer, int base)
+{
+    if (base < 2 || base > 32)
+    {
+        return buffer;
+    }
 
-//     // consider the absolute value of the number
-//     int n = abs(value);
+    int n = abs(value);
 
-//     int i = 0;
-//     while (n)
-//     {
-//         int r = n % base;
+    int i = 0;
+    while (n)
+    {
+        int r = n % base;
 
-//         if (r >= 10)
-//         {
-//             buffer[i++] = 65 + (r - 10);
-//         }
-//         else
-//         {
-//             buffer[i++] = 48 + r;
-//         }
+        if (r >= 10)
+        {
+            buffer[i++] = 65 + (r - 10);
+        }
+        else
+        {
+            buffer[i++] = 48 + r;
+        }
 
-//         n = n / base;
-//     }
+        n = n / base;
+    }
 
-//     // if the number is 0
-//     if (i == 0)
-//     {
-//         buffer[i++] = '0';
-//     }
+    if (i == 0)
+    {
+        buffer[i++] = '0';
+    }
 
-//     // If the base is 10 and the value is negative, the resulting string
-//     // is preceded with a minus sign (-)
-//     // With any other base, value is always considered unsigned
-//     if (value < 0 && base == 10)
-//     {
-//         buffer[i++] = '-';
-//     }
+    if (value < 0 && base == 10)
+    {
+        buffer[i++] = '-';
+    }
 
-//     buffer[i] = '\0'; // null terminate string
+    buffer[i] = '\0';
 
-//     // reverse the string and return it
-//     return reverse(buffer, 0, i - 1);
-// }
-// // end of itoa block
+    return reverse(buffer, 0, i - 1);
+}
+// end of itoa block
 
 int main()
 {
@@ -106,17 +91,11 @@ int main()
     fp3 = fopen("intermediate.txt", "r");
 
     fscanf(fp3, "\t%s\t%s\t%s", label, opcode, operand);
-
     if (strcmp(opcode, "START") == 0)
     {
         fprintf(fp1, "\t%s\t%s\t%s\n", label, opcode, operand);
         fprintf(fp4, "H^%s^00%s^00%d\n", label, operand, finaddr);
         fscanf(fp3, "%d%s%s%s", &address, label, opcode, operand);
-        // printf("%d\n",address);
-        // puts(label);
-        // puts(opcode);
-        // puts(operand);
-        // exit(0);
         start = address;
         diff = prevaddr - start;
         fprintf(fp4, "T^00%d^%d", address, diff);
@@ -231,8 +210,8 @@ void display()
         ch = fgetc(fp4);
     }
     fclose(fp4);
+    printf("\n\n");
 }
-
 /*
 
     intermediate.txt
