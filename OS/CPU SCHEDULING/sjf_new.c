@@ -7,6 +7,7 @@ struct Process
     int burst_time;  // Burst time
     int waittime;
     int status;
+    int tat;
 };
 
 void sjfScheduling(struct Process proc[], int n)
@@ -16,7 +17,6 @@ void sjfScheduling(struct Process proc[], int n)
     int completed = 0, time = 0;
     while (completed < n)
     {
-
         for (int i = 0, smallest = 9999; i < n; i++)
         {
             if (proc[i].arrivaltime <= time && proc[i].status == 1 && proc[i].burst_time < smallest)
@@ -28,15 +28,16 @@ void sjfScheduling(struct Process proc[], int n)
         time += proc[index].burst_time;
         completed++;
         proc[index].status = 0;
-        proc[index].waittime = time - proc[index].burst_time - proc[index].arrivaltime;
+        proc[index].tat = time - proc[index].arrivaltime;
+        proc[index].waittime = proc[index].tat - proc[index].burst_time;
+        total_turnaround_time += proc[index].tat;
         total_waiting_time += proc[index].waittime;
-        total_turnaround_time += proc[index].waittime + proc[index].burst_time;
     }
 
-    printf("Process\tBurst Time\tWaiting Time \t Turn around time\n");
+    printf("Process\tBurst Time\tArrival Time \tWaiting Time \t Turnaround Time\n");
     for (i = 0; i < n; i++)
     {
-        printf("%d\t%d\t\t\t%d\t%d\n", proc[i].pid, proc[i].burst_time, proc[i].waittime, proc[i].waittime + proc[i].burst_time);
+        printf("%d\t%d\t\t%d\t\t%d\t\t%d\n", proc[i].pid, proc[i].burst_time, proc[i].arrivaltime, proc[i].waittime, proc[i].tat);
     }
     printf("\nAverage Waiting Time: %.2f\n", (float)total_waiting_time / n);
     printf("Average Turnaround Time: %.2f\n", (float)total_turnaround_time / n);
