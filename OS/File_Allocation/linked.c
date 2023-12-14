@@ -1,37 +1,101 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <stdbool.h>
+#include <string.h>
+#include <time.h>
+
+struct node
+{
+    struct node *next;
+    bool alloc;
+};
+
 struct file
 {
-    char fname[10];
-    int start, size, block[10];
-} f[10];
+    char name[20];
+    struct node start;
+} files[20];
 
-void main()
+int fileCount = 0;
+struct node blocks[100];
+
+int main()
 {
-    int i, j, n;
-    printf("Enter no. of files:");
-    scanf("%d", &n);
-    for (i = 0; i < n; i++)
+    int choice;
+
+    for (int i = 0; i < 100; ++i)
     {
-        printf("Enter file name:");
-        scanf("%s", &f[i].fname);
-        printf("Enter starting block:");
-        scanf("%d", &f[i].start);
-        printf("Enter no.of blocks:");
-        scanf("%d", &f[i].size);
-        printf("Enter block numbers:");
-        for (j = 1; j <= f[i].size; j++)
+        blocks[i].next = NULL;
+        blocks[i].alloc = false;
+    }
+
+    printf("Memory has 100 blocks in total\n");
+
+    do
+    {
+        printf("\tMENU\n");
+        printf("1. Create file\n2. Display files\n3. Exit\nEnter choice: ");
+        scanf("%d", &choice);
+
+        switch (choice)
         {
-            scanf("%d", &f[i].block[j]);
+        case 1:
+            if (fileCount < 20)
+            {
+                // Input file name and size
+                printf("Enter file name : ");
+                scanf("%s", files[fileCount].name);
+
+                int blockSize;
+                printf("Enter number of blocks : ");
+                scanf("%d", &blockSize);
+
+                // Allocate blocks for the file
+                struct node *nextNode = &files[fileCount].start;
+
+                for (int i = 0; i < blockSize; i++)
+                {
+                    int blockNumber;
+                    printf("Enter block number %d: ", i + 1);
+                    scanf("%d", &blockNumber);
+
+                    if (blockNumber < 0 || blockNumber >= 100 || blocks[blockNumber].alloc)
+                    {
+                        printf("Invalid block number or block already allocated. Please choose a different block.\n");
+                        i--; // Decrement i to re-enter the current block input
+                        continue;
+                    }
+
+                    blocks[blockNumber].alloc = true;
+                    nextNode->next = &blocks[blockNumber];
+                    nextNode->alloc = true;
+                    nextNode = nextNode->next;
+                }
+
+                printf("File %s created!\n\n", files[fileCount].name);
+                fileCount++;
+            }
+            else
+            {
+                printf("Cannot create more files. Limit reached.\n");
+            }
+            break;
+
+        case 2:
+            for (int i = 0; i < fileCount; i++)
+            {
+                printf("File %s blocks: ", files[i].name);
+                struct node *currentNode = files[i].start.next;
+                while (currentNode != NULL)
+                {
+                    printf("%ld --->", currentNode - blocks);
+                    currentNode = currentNode->next;
+                }
+                printf("NULL\n");
+            }
+            break;
         }
-    }
-    printf("File\tstart\tsize\tblock\n");
-    for (i = 0; i < n; i++)
-    {
-        printf("%s\t%d\t%d\t", f[i].fname, f[i].start, f[i].size);
-        for (j = 1; j <= f[i].size - 1; j++)
-            printf("%d-->", f[i].block[j]);
-        printf("%d", f[i].block[j]);
-        printf("\n");
-    }
+    } while (choice >= 1 && choice <= 2);
+
+    return 0;
 }

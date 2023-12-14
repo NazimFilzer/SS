@@ -29,7 +29,7 @@ int main()
 
     for (int i = 0; i < numFiles; i++)
     {
-        printf("Enter the starting block and size of file %d: ", i + 1);
+        printf("Enter the starting block (Index Block) and size of file %d: ", i + 1);
         scanf("%d %d", &startingBlock[i], &fileSize[i]);
 
         printf("Enter the number of blocks occupied by file %d: ", i + 1);
@@ -44,7 +44,7 @@ int main()
     {
         // Display menu
         printf("\nMenu:\n");
-        printf("1. Display file information\n");
+        printf("1. Display all file information\n");
         printf("2. Display file details\n");
         printf("3. Exit\n");
         printf("Enter your choice: ");
