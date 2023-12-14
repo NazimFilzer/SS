@@ -100,10 +100,10 @@ int main()
         scanf("%d", &arr[i]);
     }
 
-    printf("Enter the initial head position: ");
+    printf("Enter the initial head pos: ");
     scanf("%d", &head);
 
-    printf("Enter the direction (0 for left, 1 for right): ");
+    printf("Enter the direction -> 0 for left, 1 for right : ");
     scanf("%d", &direction);
 
     SCAN(arr, head, size, direction);
