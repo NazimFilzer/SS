@@ -2,7 +2,7 @@
 
 void main()
 {
-    int rs[50], i, j, k, len, f, cntr[20], frame[20], min, pf = 0, time = 0, lru[20];
+    int rs[50], i, j, k, len, f, cntr[20], frame[20], min, pf = 0, time = 0, lfu[20];
 
     printf("\nEnter number of page references -- ");
     scanf("%d", &len);
@@ -17,7 +17,7 @@ void main()
     {
         cntr[i] = 0;
         frame[i] = -1;
-        lru[i] = 0;
+        lfu[i] = 0;
     }
     for (i = 0; i < len; i++)
     {
@@ -35,13 +35,13 @@ void main()
         {
             min = 0;
             for (k = 1; k < f; k++)
-                if (cntr[k] < cntr[min] || (cntr[k] == cntr[min] && lru[k] < lru[min]))
+                if (cntr[k] < cntr[min] || (cntr[k] == cntr[min] && lfu[k] < lfu[min]))
                 {
                     min = k;
                 }
             frame[min] = rs[i];
             cntr[min] = 1;
-            lru[min] = time;
+            lfu[min] = time;
             pf++;
             printf("\tPF No. %d\t\t", pf);
         }

@@ -154,61 +154,105 @@ void display()
     printf("\n\n");
 }
 
-// char *itoa(int value, char *buffer, int base)
-// {
-//     if (base < 2 || base > 32)
-//     {
-//         return buffer;
-//     }
+/*
+intermediate.txt
+**	START	2000
+2000	**	LDA	FIVE
+2003	**	STA	ALPHA
+2006	**	LDCH	CHARZ
+2009	**	STCH	C1
+2012	ALPHA	RESW	2
+2018	FIVE	WORD	5
+2021	CHARZ	BYTE	C'Z'
+2022	C1	RESB	1
+2023	**	END	**
 
-//     int n = abs(value);
+symtab.txt
+ALPHA	2012
+FIVE	2018
+CHARZ	2021
+C1	2022
 
-//     int i = 0;
-//     while (n)
-//     {
-//         int r = n % base;
 
-//         if (r >= 10)
-//         {
-//             buffer[i++] = 65 + (r - 10);
-//         }
-//         else
-//         {
-//             buffer[i++] = 48 + r;
-//         }
+output.txt
+    **	START	2000
+2000	**	LDA	FIVE	332018
+2003	**	STA	ALPHA	442012
+2006	**	LDCH	CHARZ	532021
+2009	**	STCH	C1	572022
+2012	ALPHA	RESW	2
+2018	FIVE	WORD	5	000005
+2021	CHARZ	BYTE	C'Z'	5a
+2022	C1	RESB	1
+2023	**	END	**
 
-//         n = n / base;
-//     }
+objcode.txt
+H^**^002000^002023
+T^002000^22^332018^442012^532021^572022^000005^5a
+E^002000
 
-//     if (i == 0)
-//     {
-//         buffer[i++] = '0';
-//     }
 
-//     if (value < 0 && base == 10)
-//     {
-//         buffer[i++] = '-';
-//     }
+*/
 
-//     buffer[i] = '\0';
+/*
 
-//     return reverse(buffer, 0, i - 1);
-// }
-// // end of itoa block
+char *itoa(int value, char *buffer, int base)
+{
+    if (base < 2 || base > 32)
+    {
+        return buffer;
+    }
 
-// void swap(char *x, char *y)
-// {
-//     char t = *x;
-//     *x = *y;
-//     *y = t;
-// }
+    int n = abs(value);
 
-// char *reverse(char *buffer, int i, int j)
-// {
-//     while (i < j)
-//     {
-//         swap(&buffer[i++], &buffer[j--]);
-//     }
+    int i = 0;
+    while (n)
+    {
+        int r = n % base;
 
-//     return buffer;
-// }
+        if (r >= 10)
+        {
+            buffer[i++] = 65 + (r - 10);
+        }
+        else
+        {
+            buffer[i++] = 48 + r;
+        }
+
+        n = n / base;
+    }
+
+    if (i == 0)
+    {
+        buffer[i++] = '0';
+    }
+
+    if (value < 0 && base == 10)
+    {
+        buffer[i++] = '-';
+    }
+
+    buffer[i] = '\0';
+
+    return reverse(buffer, 0, i - 1);
+}
+// end of itoa block
+
+void swap(char *x, char *y)
+{
+    char t = *x;
+    *x = *y;
+    *y = t;
+}
+
+char *reverse(char *buffer, int i, int j)
+{
+    while (i < j)
+    {
+        swap(&buffer[i++], &buffer[j--]);
+    }
+
+    return buffer;
+}
+
+*/
