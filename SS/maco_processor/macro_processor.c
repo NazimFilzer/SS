@@ -83,3 +83,48 @@ void main()
     printf("3. deftab.txt\n");
     printf("4. op.txt\n");
 }
+
+/*
+
+input.txt
+SAMPLE START 1000
+EX1 MACRO &A,&B
+- LDA &A
+- STA &B
+- MEND -
+- EX1 N1,N2
+N1 RESW 1
+N2 RESW 1
+- END -
+
+
+
+argtab.txt
+N1
+N2
+
+
+namtab.txt
+EX1
+
+
+op.txt
+SAMPLE	START	1000
+.	EX1	N1,N2
+-	LDA	N1
+-	STA	N2
+N1	RESW	1
+N2	RESW	1
+-	END	-
+
+
+
+deftab.txt
+EX1	&A,&B
+LDA	?1
+STA	?2
+MEND
+
+
+
+*/

@@ -63,7 +63,7 @@ void main()
     printf("Enter the number of processes: ");
     scanf("%d", &n);
     struct Process proc[100];
-    printf("Enter process details (Process ID, Burst Time, Arrival Time):\n");
+    printf("Enter Process ID, Burst Time, Arrival Time: -\n");
     for (i = 0; i < n; i++)
     {
         printf("Process %d: ", i + 1);

@@ -1,143 +1,133 @@
-
 #include <stdio.h>
 #include <stdlib.h>
+#include <stdbool.h>
 #include <string.h>
 
-#define MAX_NAME_LENGTH 50
-
-// Define a structure for representing a file
-struct File
+struct node
 {
-    char name[MAX_NAME_LENGTH];
-    int size;
-};
+    char name[128];
+    bool isDir;
+    struct node *p;
+    struct node *c[100];
+    int i;
+} *head, *curr;
 
-// Define a structure for representing a directory
-struct Directory
+void ls()
 {
-    char name[MAX_NAME_LENGTH];
-    struct File *files;
-    int fileCount;
-    struct Directory *subDirectories;
-    int subDirectoryCount;
-};
-
-// Function to create a file
-struct File createFile(const char *name, int size)
-{
-    struct File newFile;
-    strcpy(newFile.name, name);
-    newFile.size = size;
-    return newFile;
-}
-
-// Function to create a directory
-struct Directory createDirectory(const char *name)
-{
-    struct Directory newDirectory;
-    strcpy(newDirectory.name, name);
-    newDirectory.files = NULL;
-    newDirectory.fileCount = 0;
-    newDirectory.subDirectories = NULL;
-    newDirectory.subDirectoryCount = 0;
-    return newDirectory;
-}
-
-// Function to add a file to a directory
-void addFileToDirectory(struct File file, struct Directory *directory)
-{
-    directory->fileCount++;
-    directory->files = (struct File *)realloc(directory->files, directory->fileCount * sizeof(struct File));
-    directory->files[directory->fileCount - 1] = file;
-}
-
-// Function to create a subdirectory in a directory
-void addSubDirectory(struct Directory subDirectory, struct Directory *parentDirectory)
-{
-    parentDirectory->subDirectoryCount++;
-    parentDirectory->subDirectories = (struct Directory *)realloc(parentDirectory->subDirectories, parentDirectory->subDirectoryCount * sizeof(struct Directory));
-    parentDirectory->subDirectories[parentDirectory->subDirectoryCount - 1] = subDirectory;
-}
-
-// Function to list the contents of a directory
-void listDirectoryContents(struct Directory directory)
-{
-    printf("Contents of Directory '%s':\n", directory.name);
-    for (int i = 0; i < directory.fileCount; i++)
+    if (curr->i == 0)
     {
-        printf("File: %s, Size: %d bytes\n", directory.files[i].name, directory.files[i].size);
+        printf("\nEmpty directory!");
+        return;
     }
-    for (int i = 0; i < directory.subDirectoryCount; i++)
+    for (int i = 0; i < curr->i; i++)
     {
-        printf("Subdirectory: %s\n", directory.subDirectories[i].name);
+        if (curr->c[i]->isDir)
+            printf("\n*%s*  ", curr->c[i]->name);
+        else
+            printf("\n%s  ", curr->c[i]->name);
     }
 }
 
-// Function to delete a file from a directory
-void deleteFileFromDirectory(const char *fileName, struct Directory *directory)
+void touch(bool d)
 {
-    for (int i = 0; i < directory->fileCount; i++)
+    printf("\nEnter Name:");
+    char fname[128];
+    scanf("%s", fname);
+    struct node *temp = (struct node *)malloc(sizeof(struct node));
+    strcpy(temp->name, fname);
+    temp->isDir = d;
+    temp->p = curr;
+    curr->c[curr->i] = temp;
+    curr->i = (curr->i) + 1;
+}
+
+void cd()
+{
+    printf("\nEnter Directory Name:");
+    char dname[128];
+    scanf("%s", dname);
+    for (int i = 0; i < curr->i; i++)
     {
-        if (strcmp(directory->files[i].name, fileName) == 0)
+        if (!strcmp(curr->c[i]->name, dname) && curr->c[i]->isDir == true)
         {
-            // Found the file, remove it
-            for (int j = i; j < directory->fileCount - 1; j++)
-            {
-                directory->files[j] = directory->files[j + 1];
-            }
-            directory->fileCount--;
-            directory->files = (struct File *)realloc(directory->files, directory->fileCount * sizeof(struct File));
-            printf("File '%s' deleted from directory '%s'\n", fileName, directory->name);
+            curr = curr->c[i];
             return;
         }
     }
-    printf("File '%s' not found in directory '%s'\n", fileName, directory->name);
+    printf("\nDirectory Not Found!");
 }
 
-// Function to delete a subdirectory from a directory
-void deleteSubDirectory(const char *subDirName, struct Directory *parentDirectory)
+void cdup()
 {
-    for (int i = 0; i < parentDirectory->subDirectoryCount; i++)
+    if (curr->p == NULL)
     {
-        if (strcmp(parentDirectory->subDirectories[i].name, subDirName) == 0)
+        printf("\nYou are at the Root Directory");
+        return;
+    }
+    curr = curr->p;
+}
+
+void rm(bool d)
+{
+    printf("\nEnter Name of File or Directory to Delete:");
+    char name[128];
+    scanf("%s", name);
+    for (int i = 0; i < curr->i; i++)
+    {
+        if (!strcmp(curr->c[i]->name, name) && ((d && curr->c[i]->isDir == true) || (!d && curr->c[i]->isDir == false)))
         {
-            // Found the subdirectory, remove it
-            for (int j = i; j < parentDirectory->subDirectoryCount - 1; j++)
+            int t = i;
+            while (t < (curr->i) - 1)
             {
-                parentDirectory->subDirectories[j] = parentDirectory->subDirectories[j + 1];
+                curr->c[t] = curr->c[t + 1];
+                t++;
             }
-            parentDirectory->subDirectoryCount--;
-            parentDirectory->subDirectories = (struct Directory *)realloc(parentDirectory->subDirectories, parentDirectory->subDirectoryCount * sizeof(struct Directory));
-            printf("Subdirectory '%s' deleted from directory '%s'\n", subDirName, parentDirectory->name);
+            curr->i = (curr->i) - 1;
+            printf("\nSuccessfully Deleted.");
             return;
         }
     }
-    printf("Subdirectory '%s' not found in directory '%s'\n", subDirName, parentDirectory->name);
+    printf("\nNot found");
 }
 
 void main()
 {
-
-    struct Directory root = createDirectory("Root");
-
-    struct File file1 = createFile("file1.txt", 512);
-    struct File file2 = createFile("file2.txt", 512);
-
-    addFileToDirectory(file1, &root);
-    addFileToDirectory(file2, &root);
-
-    struct Directory subDir1 = createDirectory("Subdirectory1");
-    struct Directory subDir2 = createDirectory("Subdirectory2");
-    addSubDirectory(subDir1, &root);
-    addSubDirectory(subDir2, &root);
-
-    listDirectoryContents(root);
-
-    // Delete a file and a subdirectory
-    deleteFileFromDirectory("file1.txt", &root);
-    deleteSubDirectory("Subdirectory1", &root);
-
-    listDirectoryContents(root);
-
-    // Free the allocated memory free(root.files); free(root.subDirectories);
+    int in;
+    head = (struct node *)malloc(sizeof(struct node));
+    strcpy(head->name, "root");
+    head->isDir = true;
+    head->p = NULL;
+    head->i = 0;
+    curr = head;
+    while (true)
+    {
+        printf("\nYou are in %s directory.\n*****************************************\n1.Show everything in this Directory\n2.Change Directory\n3.Go to Parent Directory\n4.Create New File\n5.Delete File\n6.Create New Directory\n7.Delete Directory\n8.Exit\nEnter your choice:", curr->name);
+        scanf("%d", &in);
+        switch (in)
+        {
+        case 1:
+            ls();
+            break;
+        case 2:
+            cd();
+            break;
+        case 3:
+            cdup();
+            break;
+        case 4:
+            touch(false);
+            break;
+        case 5:
+            rm(false);
+            break;
+        case 6:
+            touch(true);
+            break;
+        case 7:
+            rm(true);
+            break;
+        default:
+            exit(0);
+        }
+    }
 }
