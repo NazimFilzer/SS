@@ -6,6 +6,7 @@ LOOP1:
     MOV SI, 500H  ; Load the address 500H into SI
     MOV CH, [SI]  ; Load the value at address 500H into CH
     DEC CH        ; Decrement CH
+
     INC SI        ; Increment SI
 
 LOOP2:
@@ -27,7 +28,3 @@ CARRY:
     JNZ LOOP1     ; Jump to LOOP1 if CL is not zero
 
 HLT             ; Halt the program
-
-
-
-
