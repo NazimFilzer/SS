@@ -1,4 +1,0 @@
-ABC MACRO &A,&B
-- STA ?1
-- STB ?2
-- MEND -

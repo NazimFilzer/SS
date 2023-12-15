@@ -191,3 +191,51 @@ void main()
     fclose(argtabfile);
     fclose(deftabfile);
 }
+
+/*
+
+argtab.txt
+
+R
+S
+
+
+deftab.txt
+ABC MACRO &A,&B
+- STA ?1
+- STB ?2
+- MEND -
+
+
+input.txt
+PGM START 0
+ABC MACRO &A,&B
+-   STA &A
+-   STB &B
+-   MEND    -
+-   ABC    P,Q
+-   ABC    R,S
+P   RESW    1
+Q   RESW    1
+R   RESW    1
+S   RESW    1
+-   END -
+
+
+expanded.txt
+PGM START 0
+. ABC P,Q
+- STA P
+- STB Q
+. ABC R,S
+- STA R
+- STB S
+P RESW 1
+Q RESW 1
+R RESW 1
+S RESW 1
+- END -
+
+nametab.txt
+ABC 0 3
+*/
