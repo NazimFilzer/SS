@@ -18,7 +18,7 @@ void main()
     printf("\n The Page Replacement Process is -- \n");
     for (i = 0; i < len; i++)
     {
-        if (i < f) // f = no of frames  Here directly giving them page faults 
+        if (i < f) // f = no of frames  Here directly giving them page faults
         {
             pf++;
             frame[i] = rs[i];
